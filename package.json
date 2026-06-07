@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "simple-plugin-organizer",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "This is an Obsidian(https://obsidian.md/) plugin that enables organizing both core and community plugins in one setting page. ",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {

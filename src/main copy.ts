@@ -14,7 +14,7 @@ export function debounce<T extends (...args: unknown[]) => void>(
     window.clearTimeout(timer);
     timer = window.setTimeout(() => fn(...args), ms);
   };
-} 
+}
 
 export class PluginManagerTab extends PluginSettingTab {
   private manager:  GroupManager;
