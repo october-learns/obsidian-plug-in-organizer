@@ -1,7 +1,7 @@
 {
-  "id": "simple-plugin-organizer",
-  "name": "Simple Plugin Organizer",
-  "version": "1.0.0",
+  "id": "simple-plugins-organizer",
+  "name": "Simple plugins Organizer",
+  "version": "1.0.1",
   "minAppVersion": "1.4.0",
   "description": "Group and organize your Obsidian core and community plugins together in one unified settings page.",
   "author": "October",

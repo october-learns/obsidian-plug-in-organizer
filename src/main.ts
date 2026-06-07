@@ -73,20 +73,6 @@ export class PluginManagerTab extends PluginSettingTab {
     // Sort button — icon-based custom dropdown
     this.renderSortControl(controls);
 
-    // New group button
-    const newGroupBtn = controls.createEl('button', { cls: 'po-btn po-btn--primary' });
-    setIcon(newGroupBtn.createSpan(), 'folder-plus');
-    newGroupBtn.createSpan({ text: ' New Group' });
-    newGroupBtn.addEventListener('click', () => {
-      void this.manager.createGroup('New Group').then(group => {
-        this.refreshGroupList();
-        // After re-render, find the new section and trigger inline rename
-        window.requestAnimationFrame(() => {
-          const section = this.sections.find(s => s.groupId === group.id);
-          section?.beginRename();
-        });
-      });
-    });
   }
 
   // ─── Sort control ──────────────────────────────────────────────────────────
@@ -177,6 +163,7 @@ export class PluginManagerTab extends PluginSettingTab {
         onToggleCollapse: (id, collapsed) => { void this.manager.setGroupCollapsed(id, collapsed); },
         onReorderPlugins: (gid, from, to) => { void this.manager.reorderPluginsInGroup(gid, from, to); },
         onMoveToGroup:    (pid, gid) => { void this.movePlugin(pid, gid); } ,
+        onMoveToNewGroup: (pid) => { void this.movePluginToNewGroup(pid); },
         onPluginToggle:   (p) => this.handlePluginToggle(p),
         onPluginUninstall:(p) => this.handlePluginUninstall(p),
         onOpenSettings:   () => { /* tab stays open */ },
@@ -209,6 +196,7 @@ export class PluginManagerTab extends PluginSettingTab {
         onToggleCollapse: () => {},
         onReorderPlugins: (_, from, to) => { void this.manager.reorderUngrouped(from, to); },
         onMoveToGroup:    (pid, gid) => { void this.movePlugin(pid, gid); },
+        onMoveToNewGroup: (pid) => { void this.movePluginToNewGroup(pid); },
         onPluginToggle:   (p) => this.handlePluginToggle(p),
         onPluginUninstall:(p) => this.handlePluginUninstall(p),
         onOpenSettings:   () => {},
@@ -253,6 +241,16 @@ export class PluginManagerTab extends PluginSettingTab {
     this.refreshGroupList();
   }
 
+  private async movePluginToNewGroup(pluginId: string): Promise<void> {
+    const group = await this.manager.createGroup('New Group');
+    await this.manager.addPluginToGroup(pluginId, group.id);
+    this.refreshGroupList();
+    window.requestAnimationFrame(() => {
+      const section = this.sections.find(s => s.groupId === group.id);
+      section?.beginRename();
+    });
+  }
+
   private handlePluginToggle(plugin: ManagedPlugin): void {
     // Update the local plugins array so re-renders are accurate
     const p = this.plugins.find(x => x.id === plugin.id);
@@ -273,16 +271,26 @@ export class PluginManagerTab extends PluginSettingTab {
       const desc = card.querySelector('.po-plugin-description')?.textContent?.toLowerCase() ?? '';
       const visible = !q || name.includes(q) || id.includes(q) || desc.includes(q);
       card.style.display = visible ? '' : 'none';
+      card.classList.toggle('po-hidden', !visible);
     });
 
     // Hide group sections that have no visible cards
     this.containerEl.querySelectorAll<HTMLElement>('.po-group-section').forEach(section => {
-      if (!q) { section.style.display = ''; return; }
-      const visibleCards = section.querySelectorAll<HTMLElement>(
-        '.po-plugin-card:not([style*="display: none"])'
-      );
-      section.style.display = visibleCards.length === 0 ? 'none' : '';
+      const badge    = section.querySelector<HTMLElement>('.po-group-badge');
+      const allCards = section.querySelectorAll<HTMLElement>('.po-plugin-card');
+ 
+      // No query — show every section unconditionally and restore the true count
+      if (!q) {
+        section.classList.remove('po-hidden');
+        if (badge) badge.textContent = String(allCards.length);
+        return;
+      }
+ 
+      const visibleCards = section.querySelectorAll<HTMLElement>('.po-plugin-card:not(.po-hidden)');
+      if (badge) badge.textContent = String(visibleCards.length);
+      section.classList.toggle('po-hidden', visibleCards.length === 0);
     });
+
   }
 
   

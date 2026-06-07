@@ -130,12 +130,6 @@
   transition:    background var(--po-transition), border-color var(--po-transition);
 }
 .po-btn:hover { background: var(--po-hover); }
-.po-btn--primary {
-  background:   var(--po-accent);
-  border-color: var(--po-accent);
-  color:        var(--text-on-accent, #fff);
-}
-.po-btn--primary:hover { filter: brightness(1.1); }
 
 /* ─── Groups container ──────────────────────────────────────────────────────── */
 .po-groups-container {
@@ -153,6 +147,10 @@
   transition:    box-shadow var(--po-transition);
   /* Coloured left accent strip */
   border-left:   3px solid var(--group-color, var(--po-border));
+}
+
+.po-hidden {
+  display: none;
 }
 
 /* ─── Group header ──────────────────────────────────────────────────────────── */
@@ -400,7 +398,7 @@
   animation:     poFadeIn 0.1s ease;
 }
 
-.po-group-menu-item {
+.po-group-menu-item , .po-group-menu-item--new{
   display:     flex;
   align-items: center;
   gap:         10px;
@@ -408,15 +406,34 @@
   font-size:   13px;
   cursor:      pointer;
   transition:  background var(--po-transition);
-  color:       var(--text-normal);
+  color: var(--text-muted);
 }
-.po-group-menu-item:hover         { background: var(--po-hover);}
 
 .po-group-menu-dot {
   width:         10px;
   height:        10px;
   border-radius: 50%;
   flex-shrink:   0;
+}
+
+.po-group-menu-item--new:hover , .po-group-menu-item:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover);
+}
+
+.po-group-menu-dot--new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.po-group-menu-dot--new svg {
+  width: 12px;
+  height: 12px;
 }
 
 /* ─── Colour picker popup ────────────────────────────────────────────────────── */
@@ -452,3 +469,5 @@
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
+
+

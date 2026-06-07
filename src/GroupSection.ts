@@ -15,6 +15,7 @@ export interface GroupSectionOptions {
   onToggleCollapse: (groupId: string, newCollapsed: boolean) => void;
   onReorderPlugins: (groupId: string, from: number, to: number) => void;
   onMoveToGroup:    (pluginId: string, groupId: string | null) => void;
+  onMoveToNewGroup: (pluginId: string) => void;
   onPluginToggle:   (plugin: ManagedPlugin) => void;
   onPluginUninstall:(plugin: ManagedPlugin) => void;
   onOpenSettings:   () => void;
@@ -185,6 +186,7 @@ export class GroupSection {
         onToggle:       this.opts.onPluginToggle,
         onUninstall:    this.opts.onPluginUninstall,
         onMoveToGroup:  this.opts.onMoveToGroup,
+        onMoveToNewGroup: this.opts.onMoveToNewGroup,
         onOpenSettings: this.opts.onOpenSettings,
       });
       list.appendChild(card.el);

@@ -45,6 +45,7 @@ export interface PluginCardOptions {
   onToggle: (plugin: ManagedPlugin) => void;
   onUninstall: (plugin: ManagedPlugin) => void;
   onMoveToGroup: (pluginId: string, groupId: string | null) => void;
+  onMoveToNewGroup: (pluginId: string) => void;
   onOpenSettings: () => void; // called after opening settings so the tab can close
 }
 
@@ -233,12 +234,24 @@ export class PluginCard {
 
     const menu = activeDocument.body.createDiv({ cls: 'po-group-menu' });
 
+
+    // Move to a brand-new group
+    const newGroupItem = menu.createDiv({ cls: 'po-group-menu-item po-group-menu-item--new' });
+    const newGroupIcon = newGroupItem.createSpan({ cls: 'po-group-menu-dot po-group-menu-dot--new' });
+    setIcon(newGroupIcon, 'plus');
+    newGroupItem.createSpan({ text: 'Move to new group' });
+    newGroupItem.addEventListener('click', () => {
+      this.opts.onMoveToNewGroup(plugin.id);
+      menu.remove();
+    });
+
+
     // "Remove from group" option if currently in a group
     if (currentGroupId !== null) {
       const item = menu.createDiv({ cls: 'po-group-menu-item' });
       const dot = item.createSpan({ cls: 'po-group-menu-dot'  });
       // dot.style.background = '#888888';
-      dot.addClass('po-ungroup-color-dot');
+      dot.addClass('po-ungroup-color-dot'); 
       item.createSpan({ text: 'Remove from group' });
 
       item.addEventListener('click', () => {
@@ -246,6 +259,7 @@ export class PluginCard {
         menu.remove();
       });
     }
+
 
     // move to another group 
     for (const group of groups) {
@@ -262,6 +276,7 @@ export class PluginCard {
         menu.remove();
       });
     }
+
 
     // Position menu near the button
     const rect = anchor.getBoundingClientRect();
