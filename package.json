@@ -1,6 +1,6 @@
 {
-	"name": "simple-plugin-organizer",
-	"version": "1.0.0",
+	"name": "simple-plug-in-organizer",
+	"version": "1.0.2",
 	"description": "This is an Obsidian(https://obsidian.md/) plugin that enables organizing both core and community plugins in one setting page. ",
 	"main": "main.js",
 	"type": "module",
