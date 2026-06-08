@@ -1,9 +1,9 @@
 {
-  "id": "simple-plugins-organizer",
-  "name": "Simple plugins Organizer",
+  "id": "simple-plug-in-organizer",
+  "name": "Simple Plug-in Organizer",
   "version": "1.0.1",
   "minAppVersion": "1.4.0",
-  "description": "Group and organize your Obsidian core and community plugins together in one unified settings page.",
+  "description": "Group and organize your core and community plug-ins together in one unified settings page.",
   "author": "October",
   "authorUrl": "https://github.com/october-learns",
   "isDesktopOnly": false,
