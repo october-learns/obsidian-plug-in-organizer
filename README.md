@@ -20,11 +20,10 @@ You can activate this plugin within Obsidian by doing the following:
 
 ## Latest Release 
 
-### 1.0.0 - First Release 
+### 1.0.1 - First Release 
 - Features
 	- group and list all plugins in a single setting page 
 	- assign colors to groups
-### 1.0.3 - Update name and id 
 
 
 ## License 

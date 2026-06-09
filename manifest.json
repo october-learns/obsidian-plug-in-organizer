@@ -1,7 +1,7 @@
 {
-  "id": "simple-plug-in-organizer",
-  "name": "Simple Plug-in Organizer",
-  "version": "1.0.3",
+  "id": "simple-plugin-organizer",
+  "name": "Simple Plugin Organizer",
+  "version": "1.0.1",
   "minAppVersion": "1.4.0",
   "description": "Group and organize your core and community plug-ins together in one unified settings page.",
   "author": "October",
