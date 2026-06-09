@@ -24,6 +24,7 @@ You can activate this plugin within Obsidian by doing the following:
 - Features
 	- group and list all plugins in a single setting page 
 	- assign colors to groups
+### 1.0.3 - Update name and id 
 
 
 ## License 
